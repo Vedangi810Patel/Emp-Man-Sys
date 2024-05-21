@@ -1,28 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import axios from 'axios';
 
 const LogIn = () => {
-    return (
-        <div className='login-container d-flex justify-content-center align-items-center vh-100 mt-3 mb-2'>
-            <div className='login-form-container '>
-                <h2 className='login'> Log In </h2>
-                <form className='login-form'>
-                    <div className='form-component'>
-                        <lable htmlFor="email"> <strong> Email : </strong> </lable>
-                        <input type="email" name="email" autoComplete='off' placeholder='Enter Email...'
-                            className='form-control rounded-0' />
-                    </div>
-                    <div className='form-component'>
-                        <lable htmlFor="password"> <strong> Password : </strong> </lable>
-                        <input type="password" name="password" placeholder='Enter Password...'
-                            className='form-control rounded-0' />
-                    </div>
-                    <div className='form-component'>
-                        <button className='btn btn-success w-100 rounded-0 '> LogIn </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    )
-}
 
-export default LogIn
+    const [values, setValues] = useState({
+        email: '',
+        password: ''
+    });
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        axios.post('http://localhost:5000/adminlogin')
+            .then(result => console.log(result))
+            .catch(err => console.log(err))
+    }
+
+    return (
+        <Container fluid className="d-flex justify-content-center align-items-center vh-100">
+            <Row className="w-100">
+                <Col md={4} className="mx-auto">
+                    <div className="p-4 border rounded shadow-sm">
+                        <h2 className="mb-4">Log In</h2>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label><strong>Email:</strong></Form.Label>
+                                <Form.Control name='email' onChange={(e) => setValues({ ...values, email: 'e.target.value' })} type="email" placeholder="Enter Email..." autoComplete="off" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Label><strong>Password:</strong></Form.Label>
+                                <Form.Control name='password' onChange={(e) => setValues({ ...values, email: 'e.target.value' })} type="password" placeholder="Enter Password..." />
+                            </Form.Group>
+                            <Button variant="success" type="submit" className="w-100 mt-0">
+                                Log In
+                            </Button>
+                        </Form>
+                    </div>
+                </Col>
+            </Row>
+        </Container>
+    );
+};
+
+export default LogIn;
