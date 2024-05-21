@@ -1,5 +1,8 @@
 const { QueryTypes } = require('sequelize')
 const sequelize = require('../configs/db_config');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const secret_key = "employee";
 
 const addAdmin = async (req, res) => {
     try {
@@ -19,9 +22,11 @@ const addAdmin = async (req, res) => {
             }
         );
 
-        if (existingAdmin.length > 0) {
-            return res.status(400).json({ error: "Admin Already Exists !!" });
-        }
+        console.log(existingAdmin);
+
+        // if (existingAdmin.length > 0) {
+        //     return res.status(400).json({ error: "Admin Already Exists !!" });
+        // }
 
         // await sequelize.query(
         //     `INSERT INTO admin (a_email, a_password) VALUES(:email, :password)`,

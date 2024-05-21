@@ -9,11 +9,14 @@ const LogIn = () => {
         password: ''
     });
 
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        axios.post('http://localhost:5000/adminlogin')
-            .then(result => console.log(result))
+        axios.post('http://localhost:5000/adminlogin', values)
+            .then(result => {
+                window.location.replace('/Dashboard');
+            })
             .catch(err => console.log(err))
     }
 
@@ -26,11 +29,11 @@ const LogIn = () => {
                         <Form onSubmit={handleSubmit}>
                             <Form.Group className="mb-3" controlId="formBasicEmail">
                                 <Form.Label><strong>Email:</strong></Form.Label>
-                                <Form.Control name='email' onChange={(e) => setValues({ ...values, email: 'e.target.value' })} type="email" placeholder="Enter Email..." autoComplete="off" />
+                                <Form.Control name='email' onChange={(e) => setValues({ ...values, email: e.target.value })} type="email" value={values.email} placeholder="Enter Email..." autoComplete="off" />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicPassword">
                                 <Form.Label><strong>Password:</strong></Form.Label>
-                                <Form.Control name='password' onChange={(e) => setValues({ ...values, email: 'e.target.value' })} type="password" placeholder="Enter Password..." />
+                                <Form.Control name='password' onChange={(e) => setValues({ ...values, password: e.target.value })} value={values.password} type="password" placeholder="Enter Password..." />
                             </Form.Group>
                             <Button variant="success" type="submit" className="w-100 mt-0">
                                 Log In
