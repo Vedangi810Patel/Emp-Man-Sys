@@ -1,10 +1,10 @@
 const { QueryTypes } = require('sequelize')
 const sequelize = require('../configs/db_config');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const secret_key = "employee";
 
-const addAdmin = async (req, res) => {
+const logIn = async (req, res) => {
     try {
         const { email, password } = req.body;
 
@@ -15,14 +15,14 @@ const addAdmin = async (req, res) => {
         console.log("Email: " + email, "\nPassword: " + password);
 
         const existingAdmin = await sequelize.query(
-            `SELECT * FROM admin WHERE a_email = :email`,
+            // console.log("Inside exisitng Admin")
+            `SELECT a_email,a_password FROM admin WHERE a_email = :email`,
             {
                 type: QueryTypes.SELECT,
                 replacements: { email }
             }
         );
 
-        console.log(existingAdmin);
 
         // if (existingAdmin.length > 0) {
         //     return res.status(400).json({ error: "Admin Already Exists !!" });
@@ -36,7 +36,19 @@ const addAdmin = async (req, res) => {
         //     }
         // );
 
-        return res.status(200).json({ message: "Admin added successfully" });
+        if(existingAdmin.length === 0) {
+            return res.status(400).json({ error: "Email not found"});
+        }
+
+        if(email === existingAdmin[0].a_email && password === existingAdmin[0].a_password) {
+            console.log("Admin Log In Successuflly !!")
+            return res.status(200).json({ message: "Admin Log In Successfully !!" }); 
+        }
+        else {
+            return res.status(400).json({error : "Incorrect Credentials !!" });
+        }
+
+        // return res.status(200).json({ message: "Admin added successfully" });
 
     } catch (error) {
 
@@ -69,7 +81,7 @@ const deleteAdmin = (req, res) => {
 
 
 module.exports = {
-    addAdmin,
+    logIn,
     fetchAllAdmin,
     fetchAdminById,
     updateAdmin,
