@@ -41,7 +41,7 @@ const logIn = async (req, res) => {
         }
 
         if(email === existingAdmin[0].a_email && password === existingAdmin[0].a_password) {
-            console.log("Admin Log In Successuflly !!")
+            console.log("Admin Log In Successfully !!")
             return res.status(200).json({ message: "Admin Log In Successfully !!" }); 
         }
         else {
