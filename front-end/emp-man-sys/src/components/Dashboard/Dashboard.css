@@ -1,0 +1,48 @@
+.sidebar {
+    height: 100vh;
+    background-color: rgb(151, 112, 112);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16.67%;
+}
+
+.nav-link {
+    font-size: 18px;
+    color: white
+}
+
+/* .nav-link :first {
+    box-shadow: 0 2px 4px rgb(172, 116, 116);
+} */
+
+.nav-link.d-flex {
+    justify-content: flex-start;
+}
+
+.nav-link.text-center {
+    text-align: center;
+}
+
+.main-content {
+    margin-left: 16.67%;
+}
+
+.header {
+    background-color: rgb(151, 112, 112);
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 0 4px 7px rgba(43, 43, 43, 0.555);
+}
+
+.content {
+    background-color: #fff;
+    padding: 5px;
+}
+
+.nav-link.d-flex:hover {
+    /* font-weight: bold; */
+    color: rgb(20, 146, 248);
+    background: rgb(218, 218, 218);
+    border-radius: 10px;
+}
