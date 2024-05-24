@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
-const LogIn = () => {
+const AddCategory = () => {
+
     const [values, setValues] = useState({  
         email: '',
         password: ''
@@ -46,9 +47,9 @@ const LogIn = () => {
         <Container fluid className="d-flex justify-content-center align-items-center vh-100 bg-light">
             <Row className="w-100">
                 <Col md={4} className="mx-auto">
-                    <div className="p-4 border rounded shadow-sm bg-white">
+                    <div className="p-2 border rounded shadow-sm bg-white">
                         {error && <Alert variant="danger">{error}</Alert>}
-                        <h2 className="mb-4 text-center">Log In</h2>
+                        <h2 className="mb-4 text-center">Add Category</h2>
                         {loading ? (
                             <div className="text-center">
                                 <Spinner animation="border" role="status" variant="success" style={{ width: '3rem', height: '3rem' }}>
@@ -92,7 +93,7 @@ const LogIn = () => {
                 </Col>
             </Row>
         </Container>
-    );
-};
+    )
+}
 
-export default LogIn;
+export default AddCategory;
