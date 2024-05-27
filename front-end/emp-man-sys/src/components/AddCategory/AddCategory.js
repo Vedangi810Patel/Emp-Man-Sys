@@ -1,30 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import axios from 'axios';
 
 const AddCategory = () => {
 
-    const [values, setValues] = useState({  
-        email: '',
-        password: ''
-    });
+    const [category, setCategory] = useState()
 
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setLoading(true); 
-        setError(null); 
+        setLoading(true);
+        setError(null);
 
         try {
-            const response = await axios.post('http://localhost:5000/adminlogin', values);
+            // const response = await axios.post('http://localhost:5000/adminlogin', values);
+            await axios.post('http://localhost:5000/adminlogin', { category });
+
             setTimeout(() => {
                 setLoading(false);
                 window.location.replace('/Dashboard');
-            }, 1000); 
+            }, 1000);
         } catch (err) {
-            setLoading(false); 
+            setLoading(false);
             if (err.response) {
                 if (err.response.status === 400) {
                     setError("Bad request. Please check your input.");
@@ -44,10 +43,10 @@ const AddCategory = () => {
     }
 
     return (
-        <Container fluid className="d-flex justify-content-center align-items-center vh-100 bg-light">
-            <Row className="w-100">
-                <Col md={4} className="mx-auto">
-                    <div className="p-2 border rounded shadow-sm bg-white">
+        <Container fluid className="min-vh-100 d-flex justify-content-center bg-light mt-5">
+            <Row className="w-100 justify-content-center">
+                <Col md={4}>
+                    <div className="p-4 border rounded shadow-sm bg-white">
                         {error && <Alert variant="danger">{error}</Alert>}
                         <h2 className="mb-4 text-center">Add Category</h2>
                         {loading ? (
@@ -55,37 +54,27 @@ const AddCategory = () => {
                                 <Spinner animation="border" role="status" variant="success" style={{ width: '3rem', height: '3rem' }}>
                                     <span className="visually-hidden">Loading...</span>
                                 </Spinner>
-                                <p className="mt-3">Logging in...</p>
+                                <p className="mt-3">Adding Category...</p>
                             </div>
                         ) : (
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label><strong>Email:</strong></Form.Label>
-                                    <Form.Control 
-                                        name='email' 
-                                        onChange={(e) => setValues({ ...values, email: e.target.value })} 
-                                        type="email" 
-                                        value={values.email} 
-                                        placeholder="abc123@gmail.com" 
-                                        autoComplete="off" 
+                                    <Form.Label><strong>Category:</strong></Form.Label>
+                                    <Form.Control
+                                        name='category'
+                                        onChange={(e) => setCategory(e.target.value)}
+                                        type="text"
+                                        value={category}
+                                        placeholder="Enter Category ..."
+                                        autoComplete="off"
                                     />
                                 </Form.Group>
-                                <Form.Group className="mb-3" controlId="formBasicPassword">
-                                    <Form.Label><strong>Password:</strong></Form.Label>
-                                    <Form.Control 
-                                        name='password' 
-                                        onChange={(e) => setValues({ ...values, password: e.target.value })} 
-                                        value={values.password} 
-                                        type="password" 
-                                        placeholder="Enter Your Password..." 
-                                    />
-                                </Form.Group>
-                                <Button 
-                                    style={{ background: 'rgb(151, 112, 112)' }} 
-                                    type="submit" 
+                                <Button
+                                    style={{ background: 'rgb(151, 112, 112)' }}
                                     className="w-100 mt-0"
+                                    type='submit'
                                 >
-                                    Log In
+                                    Add Category
                                 </Button>
                             </Form>
                         )}

@@ -29,6 +29,15 @@
 }
 
 .header {
+    position: fixed;
+    margin-left: 15px;
+    /* position: sticky; */
+    top: 3;
+    z-index: 1000;
+    /* Ensure it stays above other content */
+    /* padding: 1rem 0; */
+
+    width: 80%;
     background-color: rgb(151, 112, 112);
     color: white;
     padding: 10px 20px;

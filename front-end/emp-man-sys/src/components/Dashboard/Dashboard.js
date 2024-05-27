@@ -55,7 +55,7 @@ const Dashboard = () => {
         </Col>
         <Col xs={10} className="main-content p-3">
           <div className="header mb-4">
-            <h4 className="fw-bold">Employee Management System</h4>
+            <h4 className="fw-bold" style={{fixed: "true"}}>Employee Management System</h4>
           </div>
           <div className="content">
             <Outlet />
@@ -67,3 +67,4 @@ const Dashboard = () => {
 }
 
 export default Dashboard;
+

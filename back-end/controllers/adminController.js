@@ -16,7 +16,7 @@ const logIn = async (req, res) => {
 
         const existingAdmin = await sequelize.query(
             // console.log("Inside exisitng Admin")
-            `SELECT a_email,a_password FROM admin WHERE a_email = :email`,
+            `SELECT * FROM admin WHERE a_email = :email`,
             {
                 type: QueryTypes.SELECT,
                 replacements: { email }
@@ -36,16 +36,34 @@ const logIn = async (req, res) => {
         //     }
         // );
 
-        if(existingAdmin.length === 0) {
-            return res.status(400).json({ error: "Email not found"});
+        if (existingAdmin.length === 0) {
+            return res.status(400).json({ error: "Email not found" });
         }
 
-        if(email === existingAdmin[0].a_email && password === existingAdmin[0].a_password) {
+        if (email === existingAdmin[0].a_email && password === existingAdmin[0].a_password) {
+
+            const token = jwt.sign(
+                {
+                    a_id: existingAdmin[0].a_id,
+                    a_email: existingAdmin[0].a_email,
+                },
+                secret_key
+            );
+            res.cookie("jwt", token, {
+                httpOnly: true,
+                secure: true,
+                maxAge: 3600000,
+            });
+            return res.status(200).json({
+                message: "Login successful",
+                token: token,
+            });
+
             console.log("Admin Log In Successfully !!")
-            return res.status(200).json({ message: "Admin Log In Successfully !!" }); 
+            return res.status(200).json({ message: "Admin Log In Successfully !!" });
         }
         else {
-            return res.status(400).json({error : "Incorrect Credentials !!" });
+            return res.status(400).json({ error: "Incorrect Credentials !!" });
         }
 
         // return res.status(200).json({ message: "Admin added successfully" });
