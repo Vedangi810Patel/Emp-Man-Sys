@@ -18,10 +18,7 @@ const LogIn = () => {
 
         try {
             const response = await axios.post('http://localhost:5000/adminlogin', values);
-            // await axios.post('http://localhost:5000/adminlogin', values);
-
-            
-
+            localStorage.setItem('token', response.data.token);
             setTimeout(() => {
                 setLoading(false);
                 window.location.replace('/Dashboard');

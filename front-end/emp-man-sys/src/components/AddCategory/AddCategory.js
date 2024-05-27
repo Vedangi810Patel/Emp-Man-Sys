@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import axios from 'axios';
+import { toast } from 'react-toastify'
 
 const AddCategory = () => {
+
+    const token = localStorage.getItem('token')
+    console.log(token)
 
     const [category, setCategory] = useState()
 
@@ -16,11 +20,12 @@ const AddCategory = () => {
 
         try {
             // const response = await axios.post('http://localhost:5000/adminlogin', values);
-            await axios.post('http://localhost:5000/adminlogin', { category });
+            await axios.post('http://localhost:5000/addCategory', { category });
 
             setTimeout(() => {
+                toast.success("Category Added Sucessfully !");
                 setLoading(false);
-                window.location.replace('/Dashboard');
+                setCategory('')
             }, 1000);
         } catch (err) {
             setLoading(false);
@@ -58,7 +63,7 @@ const AddCategory = () => {
                             </div>
                         ) : (
                             <Form onSubmit={handleSubmit}>
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Group className="mb-3" controlId="formBasicCategory">
                                     <Form.Label><strong>Category:</strong></Form.Label>
                                     <Form.Control
                                         name='category'
